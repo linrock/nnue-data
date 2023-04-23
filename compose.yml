@@ -1,0 +1,10 @@
+services:
+  nnue-data:
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+    container_name: nnue-data
+    image: nnue-data
+    volumes:
+      - /dev/shm:/dev/shm
+      - /mnt/data:/mnt/data
