@@ -1,3 +1,4 @@
+import dbm
 from glob import glob
 import io
 import os
@@ -17,7 +18,7 @@ if len(sys.argv) < 2:
     sys.exit(0)
 
 
-piece_orientations_seen = set()
+piece_orientations_db = dbm.open('/dev/shm/positions-dedupe', 'c')
 
 def move_is_promo(uci_move):
     return len(uci_move) == 5 and uci_move[-1] in ['n','b','r','q']
@@ -106,8 +107,8 @@ class PositionCsvIterator:
         sf_bestmove2_score = int(sf_bestmove2_score)
 
         piece_orientation = fen.split(' ')[0]
-        seen_position_before = piece_orientation in piece_orientations_seen
-        piece_orientations_seen.add(piece_orientation)
+        seen_position_before = piece_orientation in piece_orientations_db
+        piece_orientations_db[piece_orientation] = 1
 
         # assume the dataset is a sequence of training games
         # and that we're at the beginning of a training game when this is true
@@ -194,7 +195,6 @@ class PositionCsvIterator:
         return (fen, bestmove_uci, bestmove_score, ply, game_result)
 
     def process_csv_rows(self):
-        global piece_orientations_seen
         positions = []
         for row in self.infile:
             position = self.process_csv_row(row)
