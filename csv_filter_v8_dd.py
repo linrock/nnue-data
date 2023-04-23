@@ -268,3 +268,6 @@ for file in sorted(glob(sys.argv[1]))[::-1]:
         filtered_binpack_filename = filtered_plain_filename.replace('-v8-dd.plain', '-v8-dd.binpack')
         print(os.system(f"stockfish convert {filtered_plain_filename} {filtered_binpack_filename}"))
         os.system(f"rm {filtered_plain_filename}")
+        # minimize the binpack, then remove the unminified version
+        print(os.system(f"minimize_binpack.sh {filtered_binpack_filename}")
+        os.system(f"rm {filtered_binpack_filename}")
