@@ -42,7 +42,9 @@ RUN chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
 WORKDIR /home/ubuntu/
 COPY *.py *.sh *.txt .
+USER root
 RUN cp minimize_binpack.sh /usr/local/bin/
+USER ubuntu
 
 # prepare python 3.11 env
 RUN python3.11 -m venv venv
