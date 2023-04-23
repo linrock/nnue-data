@@ -18,7 +18,7 @@ if len(sys.argv) < 2:
     sys.exit(0)
 
 
-piece_orientations_db = dbm.open('/dev/shm/positions-dedupe', 'c')
+piece_orientations_db = dbm.open('/dev/shm/positions-dedupe.gdbm', 'c')
 
 def move_is_promo(uci_move):
     return len(uci_move) == 5 and uci_move[-1] in ['n','b','r','q']
@@ -108,7 +108,7 @@ class PositionCsvIterator:
 
         piece_orientation = fen.split(' ')[0]
         seen_position_before = piece_orientation in piece_orientations_db
-        piece_orientations_db[piece_orientation] = 1
+        piece_orientations_db[piece_orientation] = '1'
 
         # assume the dataset is a sequence of training games
         # and that we're at the beginning of a training game when this is true
@@ -269,5 +269,5 @@ for file in sorted(glob(sys.argv[1]))[::-1]:
         print(os.system(f"stockfish convert {filtered_plain_filename} {filtered_binpack_filename}"))
         os.system(f"rm {filtered_plain_filename}")
         # minimize the binpack, then remove the unminified version
-        print(os.system(f"minimize_binpack.sh {filtered_binpack_filename}")
+        print(os.system(f"minimize_binpack.sh {filtered_binpack_filename}"))
         os.system(f"rm {filtered_binpack_filename}")
