@@ -58,7 +58,7 @@ class PositionCsvIterator:
         self.infile = infile
         self.outfile = outfile
 
-        self.EARLY_PLY_SKIP = 28
+        self.EARLY_PLY_SKIP = 36
 
         self.prev_ply = -1
 
@@ -220,6 +220,7 @@ class PositionCsvIterator:
 
     def print_stats(self):
         num_positions_after_filter = self.num_positions - self.num_positions_filtered_out
+        skip = self.EARLY_PLY_SKIP
         print(textwrap.dedent(f'''
             Processed {self.num_positions} positions
               # games:                       {self.num_games:8d}
@@ -227,7 +228,7 @@ class PositionCsvIterator:
                 # non-standard games:        {self.num_non_standard_games:8d}
               # positions:                   {self.num_positions:8d}
                 # startpos:                  {self.num_start_positions:8d}
-                # early plies <= 28:         {self.num_early_plies:8d}
+                # early plies <= {skip}:     {self.num_early_plies:8d}
                 # only one move:             {self.num_only_one_move:8d}
                 # one good move (v6):        {self.num_one_good_move:8d}
                 # one good move (v8):        {self.num_one_good_move_v8:8d}
