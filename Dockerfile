@@ -36,6 +36,7 @@ WORKDIR /tmp/stockfish/src
 RUN git fetch origin && git checkout -t origin/nnue-data-v7
 RUN make -j profile-build ARCH=x86-64-bmi2
 RUN cp stockfish /usr/local/bin/stockfish-output-positions-csv
+RUN cp stockfish /usr/local/bin/stockfish
 RUN mv /tmp/stockfish /tmp/stockfish-positions-csv-src
 
 RUN chown -R ubuntu:ubuntu /home/ubuntu
@@ -44,6 +45,7 @@ WORKDIR /home/ubuntu/
 COPY *.py *.sh *.txt .
 USER root
 RUN cp minimize_binpack.sh /usr/local/bin/
+RUN chown ubuntu:ubuntu *
 USER ubuntu
 
 # prepare python 3.11 env
