@@ -45,8 +45,8 @@ COPY *.py *.sh *.txt .
 
 # prepare python 3.11 env
 RUN python3.11 -m venv venv
-RUN venv/bin/pip3 install -r stockfish/nnue-data/requirements.txt
+RUN venv/bin/pip3 install -r requirements.txt
 RUN echo 'export PATH=/home/ubuntu/venv/bin:$PATH' >> ~/.bashrc
 
-WORKDIR /home/ubuntu/stockfish/nnue-data/
+WORKDIR /home/ubuntu/
 CMD sleep infinity
