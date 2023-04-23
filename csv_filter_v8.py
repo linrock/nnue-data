@@ -88,6 +88,10 @@ class PositionCsvIterator:
         self.num_sf_bestmove1_capture_promos = 0
         self.num_sf_bestmove2_capture_promos = 0
 
+        # reducing duplicate positions
+        self.num_seen_before = 0
+        self.piece_orientations_seen = set()
+
         self.num_positions_filtered_out = 0
 
     def process_csv_row(self, csv_row):
@@ -105,6 +109,10 @@ class PositionCsvIterator:
         bestmove_score = int(bestmove_score)
         sf_bestmove1_score = int(sf_bestmove1_score)
         sf_bestmove2_score = int(sf_bestmove2_score)
+
+        piece_orientation = fen.split(' ')[0]
+        seen_position_before = piece_orientation in self.piece_orientations_seen
+        self.piece_orientations_seen.add(piece_orientation)
 
         # assume the dataset is a sequence of training games
         # and that we're at the beginning of a training game when this is true
@@ -157,6 +165,10 @@ class PositionCsvIterator:
         elif move_is_promo(bestmove_uci):
             # remove bestmove promotions
             self.num_bestmove_promos += 1
+            return
+        elif seen_position_before:
+            # faster to remove duplicate positions before filtering with chess.Board
+            self.num_seen_before += 1
             return
 
         # filtering is slower when needing to initialize a board
@@ -239,8 +251,9 @@ class PositionCsvIterator:
                 # only one move:             {self.num_only_one_move:8d}
                 # one good move (v6):        {self.num_one_good_move:8d}
                 # one good move (v8):        {self.num_one_good_move_v8:8d}
-                # bestmove promos:           {self.num_bestmove_promos:8d}
+                # seen before:               {self.num_seen_before:8d}
                 # bestmove captures:         {self.num_bestmove_captures:8d}
+                # bestmove promos:           {self.num_bestmove_promos:8d}
                 # sf bestmove1 cap/promos:   {self.num_sf_bestmove1_capture_promos:8d}
                 # sf bestmove2 cap/promos:   {self.num_sf_bestmove2_capture_promos:8d}
               # positions after filtering:   {num_positions_after_filter:8d}
