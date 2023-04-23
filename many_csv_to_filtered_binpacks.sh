@@ -14,10 +14,12 @@ function csv_zst_to_filtered_binpack() {
     echo "Doing nothing, filtered binpack exists: $output_filtered_binpack_filename"
   else
     echo "Filtering v8 ... $input_csv_zst_filename" | tee $filter_log_filename
-    python3 /home/ubuntu/stockfish/nnue-data/csv_filter_v8.py $input_csv_zst_filename >> $filter_log_filename
+    python3 /home/ubuntu/csv_filter_v8.py $input_csv_zst_filename >> $filter_log_filename
     stockfish convert $filtered_plain_filename $output_filtered_binpack_filename >> $filter_log_filename
     rm $filtered_plain_filename
     ls -lth $output_filtered_binpack_filename >> $filter_log_filename
+    minimize_binpack.sh $output_filtered_binpack_filename >> $filter_log_filename
+    rm $output_filtered_binpack_filename
   fi
 }
 export -f csv_zst_to_filtered_binpack
