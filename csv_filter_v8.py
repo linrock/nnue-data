@@ -32,9 +32,17 @@ def filter_csv_to_plain(input_filename):
         print(f'Found .csv.zst.filter-v8.plain file, doing nothing:')
         print(output_filename)
         return
-    elif os.path.isfile(output_filename.replace('.csv.zst.filter-v8.plain', '.csv.zst.filter-v8.binpack')):
+    # skip filtering if the .binpack file already exists
+    binpack_filename = output_filename.replace('.csv.zst.filter-v8.plain', '.csv.zst.filter-v8.binpack')
+    if os.path.isfile(binpack_filename):
         print(f'Found .csv.zst.filter-v8.binpack file, doing nothing:')
-        print(output_filename.replace('.csv.zst.filter-v8.plain', '.csv.zst.filter-v8.binpack'))
+        print(binpack_filename)
+        return
+    # skip filtering if the minimized .min.binpack file already exists
+    min_binpack_filename = binpack_filename.replace('.filter-v8.binpack', '.filter-v8.binpack.min.binpack')
+    if os.path.isfile(min_binpack_filename):
+        print(f'Found .csv.zst.filter-v8.binpack.min.binpack file, doing nothing:')
+        print(min_binpack_filename)
         return
     # filter the file
     if input_filename.endswith(".csv.zst"):
@@ -45,7 +53,6 @@ def filter_csv_to_plain(input_filename):
             text_stream = io.TextIOWrapper(stream_reader, encoding='utf-8')
             PositionCsvIterator(text_stream, outfile).process_csv_rows()
     else:
-        output_filename = input_filename.replace('.csv', '.csv.filter-v8.plain')
         with open(input_filename, 'r') as infile, \
              open(output_filename, 'w+') as outfile:
             PositionCsvIterator(infile, outfile).process_csv_rows()
