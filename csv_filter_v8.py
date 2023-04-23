@@ -228,7 +228,7 @@ class PositionCsvIterator:
                 # non-standard games:        {self.num_non_standard_games:8d}
               # positions:                   {self.num_positions:8d}
                 # startpos:                  {self.num_start_positions:8d}
-                # early plies <= {skip}:     {self.num_early_plies:8d}
+                # early plies <= {skip}:         {self.num_early_plies:8d}
                 # only one move:             {self.num_only_one_move:8d}
                 # one good move (v6):        {self.num_one_good_move:8d}
                 # one good move (v8):        {self.num_one_good_move_v8:8d}
