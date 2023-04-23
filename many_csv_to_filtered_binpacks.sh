@@ -20,6 +20,7 @@ function csv_zst_to_filtered_binpack() {
     ls -lth $output_filtered_binpack_filename >> $filter_log_filename
     minimize_binpack.sh $output_filtered_binpack_filename >> $filter_log_filename
     rm $output_filtered_binpack_filename
+    ls -lth ${output_filtered_binpack_filename}.min.binpack >> $filter_log_filename
   fi
 }
 export -f csv_zst_to_filtered_binpack
