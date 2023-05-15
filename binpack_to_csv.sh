@@ -18,4 +18,4 @@ transform rescore \
   input_file ${input_binpack}
 quit"
 
-printf "$options" | ./stockfish-output-positions-csv
+printf "$options" | stockfish-output-positions-csv

@@ -19,7 +19,7 @@ fi
 echo "Found binpack: $binpack_file "
 echo "Found CSV:     $csv_filepath"
 echo Counting binpack positions...
-num_binpack_positions=$(./stockfish-output-positions-csv \
+num_binpack_positions=$(stockfish-output-positions-csv \
   gather_statistics position_count \
   input_file $binpack_file | grep "Number of positions" | awk '{print $NF}')
 num_csv_positions=$(wc -l $csv_filepath | awk '{print $1}')
