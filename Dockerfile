@@ -37,6 +37,8 @@ RUN git fetch origin && git checkout -t origin/nnue-data-v7
 RUN make -j profile-build ARCH=x86-64-bmi2
 RUN cp stockfish /usr/local/bin/stockfish-output-positions-csv
 RUN cp stockfish /usr/local/bin/stockfish
+RUN cp ../script/interleave_binpacks.py /home/ubuntu/
+RUN cp ../script/shuffle_binpacks.py /home/ubuntu/
 RUN mv /tmp/stockfish /tmp/stockfish-positions-csv-src
 
 RUN chown -R ubuntu:ubuntu /home/ubuntu
