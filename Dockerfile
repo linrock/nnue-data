@@ -2,7 +2,7 @@ FROM ubuntu:23.04
 
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC \
   apt update && \
-  apt install -y vim git tmux cmake wget curl g++ software-properties-common zstd
+  apt install -y vim git tmux cmake wget curl g++ software-properties-common zstd python3-pip
 
 # RUN useradd --create-home --shell /bin/bash ubuntu
 # WORKDIR /home/ubuntu
@@ -55,6 +55,7 @@ RUN cp minimize_binpack.sh /usr/local/bin/
 # RUN python3.11 -m venv venv
 # RUN venv/bin/pip3 install -r requirements.txt
 # RUN echo 'export PATH=/home/ubuntu/venv/bin:$PATH' >> ~/.bashrc
+RUN pip3 install -r requirements.txt --break-system-packages
 
 # WORKDIR /home/ubuntu/
 CMD sleep infinity
