@@ -18,4 +18,4 @@ isready
 transform minimize_binpack input_file ${input_binpack} output_file ${output_binpack}
 quit"
 
-printf "$options" | stockfish-bin-min
+printf "$options" | stockfish

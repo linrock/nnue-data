@@ -23,7 +23,6 @@ RUN git clone https://github.com/linrock/Stockfish /tmp/stockfish
 WORKDIR /tmp/stockfish/src
 RUN git fetch origin && git checkout -t origin/nnue-data-v7-3072
 RUN make -j profile-build ARCH=x86-64-bmi2
-RUN cp stockfish /usr/local/bin/stockfish-bin-min
 RUN cp stockfish /usr/local/bin/stockfish-output-positions-csv
 RUN cp stockfish /usr/local/bin/stockfish
 
