@@ -17,26 +17,17 @@ RUN echo 'source ~/.bash_profile' >> .bashrc
 # RUN make
 # RUN cp programs/zstd /usr/local/bin/
 
-# stockfish binpack minimizer
-WORKDIR /tmp
-RUN git clone https://github.com/official-stockfish/Stockfish /tmp/stockfish
-WORKDIR /tmp/stockfish/src
-RUN git fetch origin && git checkout -t origin/tools
-RUN make -j profile-build ARCH=x86-64-bmi2
-RUN cp stockfish /usr/local/bin/stockfish-bin-min
-RUN mv /tmp/stockfish /tmp/stockfish-bin-min-src
-
 # stockfish for multipv2 scores and csv data
 WORKDIR /tmp
 RUN git clone https://github.com/linrock/Stockfish /tmp/stockfish
 WORKDIR /tmp/stockfish/src
-RUN git fetch origin && git checkout -t origin/nnue-data-v7
+RUN git fetch origin && git checkout -t origin/nnue-data-v7-3072
 RUN make -j profile-build ARCH=x86-64-bmi2
+RUN cp stockfish /usr/local/bin/stockfish-bin-min
 RUN cp stockfish /usr/local/bin/stockfish-output-positions-csv
 RUN cp stockfish /usr/local/bin/stockfish
+
 WORKDIR /tmp/stockfish/script
-# RUN cp interleave_binpacks.py /home/ubuntu/
-# RUN cp shuffle_binpack.py /home/ubuntu/
 RUN cp interleave_binpacks.py /root/
 RUN cp shuffle_binpack.py /root/
 RUN mv /tmp/stockfish /tmp/stockfish-positions-csv-src
