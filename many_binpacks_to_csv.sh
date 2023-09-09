@@ -14,7 +14,7 @@ function binpack_to_csv() {
   elif [ -f ${output_csv_filepath}.zst ]; then
     echo "Doing nothing, csv.zst exists: ${output_csv_filepath}.zst"
   else
-    echo "Filtering... $input_filename -> $output_csv_filepath"
+    echo "Converting... $input_filename -> .csv"
     ./binpack_to_csv.sh $input_filename | grep "d6 pv2" > $output_csv_filepath
   fi
 }
