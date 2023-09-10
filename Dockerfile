@@ -2,11 +2,14 @@ FROM ubuntu:23.04
 
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC \
   apt update && \
-  apt install -y vim git tmux cmake wget curl g++ software-properties-common zstd python3-pip
+  apt install -y vim git sudo tmux cmake wget curl g++ \
+                 software-properties-common zstd python3-pip
 
 # RUN useradd --create-home --shell /bin/bash ubuntu
-# WORKDIR /home/ubuntu
-WORKDIR /root
+RUN usermod -aG sudo ubuntu
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+WORKDIR /home/ubuntu
 COPY .bash_profile .
 RUN echo 'source ~/.bash_profile' >> .bashrc
 
@@ -31,15 +34,14 @@ RUN cp interleave_binpacks.py /root/
 RUN cp shuffle_binpack.py /root/
 RUN mv /tmp/stockfish /tmp/stockfish-positions-csv-src
 
-# RUN chown -R ubuntu:ubuntu /home/ubuntu
-# USER ubuntu
-# WORKDIR /home/ubuntu/
-WORKDIR /root/
+RUN chown -R ubuntu:ubuntu /home/ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu/
 COPY *.py *.sh *.txt .
 USER root
 RUN cp minimize_binpack.sh /usr/local/bin/
-# RUN chown ubuntu:ubuntu *
-# USER ubuntu
+RUN chown ubuntu:ubuntu *
+USER ubuntu
 
 # prepare python 3.11 env
 # RUN python3.11 -m venv venv
