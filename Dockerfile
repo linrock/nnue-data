@@ -38,10 +38,10 @@ RUN chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
 WORKDIR /home/ubuntu/
 COPY *.py *.sh *.txt .
-USER root
-RUN cp minimize_binpack.sh /usr/local/bin/
-RUN chown ubuntu:ubuntu *
-USER ubuntu
+RUN sudo cp minimize_binpack.sh /usr/local/bin/
+RUN sudo cp interleave_binpacks.py /usr/local/bin/
+RUN sudo cp shuffle_binpack.py /usr/local/bin/
+RUN sudo chown ubuntu:ubuntu *
 
 # prepare python 3.11 env
 # RUN python3.11 -m venv venv
