@@ -59,6 +59,7 @@ class PositionCsvIterator:
 
     def process_csv_rows(self):
         positions = []
+        prev_ply = -1
         for row in self.infile:
             split_row = row.strip().split(",")
             if len(split_row) == 10:
@@ -77,7 +78,9 @@ class PositionCsvIterator:
             sf_bestmove1_score = int(sf_bestmove1_score)
             sf_bestmove2_score = int(sf_bestmove2_score)
             should_filter_out = False
-            if ply == 0:
+
+            # assume the dataset is a sequence of training games
+            if ply < prev_ply:
                 if 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq' in fen:
                     self.num_standard_games += 1
                 else:
@@ -124,6 +127,7 @@ class PositionCsvIterator:
                     'result': game_result,
                     'should_filter_out': should_filter_out,
                 })
+            prev_ply = ply
             self.print_stats()
         self.print_stats()
 
