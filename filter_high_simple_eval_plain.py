@@ -52,18 +52,20 @@ if __name__ == '__main__':
     print(f'Filtering {input_filename} ...')
     with open(input_filename, 'r') as infile, open(output_filename, 'w+') as outfile:
         for row in infile:
-            if 'fen' in row.startswith('fen'):
+            if row.startswith('fen'):
                 position = row
             else:
                 position += row
-            if row == 'e\n':
-                num_positions += 1
-                fen_str = position.split(' ')[1]
-                simple_eval = get_simple_eval(fen_str)
-                if abs(simple_eval) > MIN_SIMPLE_EVAL_THRESHOLD:
-                    # any position with simple eval is ok
-                    num_filtered_positions += 1
-                    outfile.write(position)
+                if row == 'e\n':
+                    num_positions += 1
+                    fen_str = position.split(' ')[1]
+                    simple_eval = get_simple_eval(fen_str)
+                    if abs(simple_eval) > MIN_SIMPLE_EVAL_THRESHOLD:
+                        # any position with simple eval is ok
+                        num_filtered_positions += 1
+                        outfile.write(position)
+                    if num_positions % 100_000 == 0:
+                        print(f'{num_positions} positions processed. # high simple eval: {num_filtered_positions}')
 
     print(f'Filtered {input_filename} to {output_filename}')
     print(f'simple eval > {MIN_SIMPLE_EVAL_THRESHOLD}')
