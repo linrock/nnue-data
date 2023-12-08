@@ -1,6 +1,6 @@
 services:
   nnue-data:
-    restart: always
+    restart: no
     build:
       dockerfile: ./Dockerfile
     container_name: nnue-data
