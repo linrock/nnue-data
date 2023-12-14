@@ -5,7 +5,7 @@ import sys
 '''
 
 # abs(simple_eval) needs to be higher than this to keep the position
-MIN_SIMPLE_EVAL_THRESHOLD = 2000
+MIN_SIMPLE_EVAL_THRESHOLD = 1000
 
 # https://github.com/official-stockfish/Stockfish/blob/master/src/types.h#L179-L183
 PAWN = 208
