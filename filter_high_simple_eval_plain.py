@@ -61,7 +61,6 @@ if __name__ == '__main__':
                     fen_str = position.split(' ')[1]
                     simple_eval = get_simple_eval(fen_str)
                     if abs(simple_eval) > MIN_SIMPLE_EVAL_THRESHOLD:
-                        # any position with simple eval is ok
                         num_filtered_positions += 1
                         outfile.write(position)
                     if num_positions % 100_000 == 0:
